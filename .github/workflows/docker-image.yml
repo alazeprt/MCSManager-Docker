@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image of MCSManager-Web
+      run: docker build ./MCSManager-Web --file ./MCSManager-Web/Dockerfile --tag mcsmanager-web:$(date +%s)
+
+    - uses: actions/checkout@v4
+    - name: Build the Docker image of MCSManager-Daemon
+      run: docker build ./MCSManager-Daemon --file ./MCSManager-Daemon/Dockerfile --tag mcsmanager-daemon:$(date +%s)
